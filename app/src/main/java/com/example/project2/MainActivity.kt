@@ -8,8 +8,6 @@ import java.text.DecimalFormat
 class MainActivity : AppCompatActivity(), KeyboardFragment.DataListener {
 
     private lateinit var decimalFormat: DecimalFormat
-//    private val screenFragmentInstance : ScreenFragment = ScreenFragment()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,5 +34,10 @@ class MainActivity : AppCompatActivity(), KeyboardFragment.DataListener {
     override fun onClear() {
         val screenFragmentInstance = supportFragmentManager.findFragmentById(R.id.screenLayout) as ScreenFragment
         screenFragmentInstance.clearScreen()
+    }
+
+    override fun onClearLast() {
+        val screenFragmentInstance = supportFragmentManager.findFragmentById(R.id.screenLayout) as ScreenFragment
+        screenFragmentInstance.clearLast()
     }
 }

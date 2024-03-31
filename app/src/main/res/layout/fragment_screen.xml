@@ -12,6 +12,9 @@
         android:layout_height="match_parent"
         android:id="@+id/screenView"
         android:textSize="64sp"
-        android:text="@string/hello_screen_fragment" />
+        android:text="@string/hello_screen_fragment"
+        android:gravity="right"
+        android:textAlignment="gravity"
+        />
 
 </FrameLayout>

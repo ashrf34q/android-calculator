@@ -31,6 +31,8 @@ class KeyboardFragment : Fragment() {
         fun onResult(result: Double)
 
         fun onClear()
+
+        fun onClearLast()
     }
 
     override fun onAttach(context: Context) {
@@ -50,13 +52,6 @@ class KeyboardFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentKeyboardBinding.inflate(inflater, container, false)
-
-//        binding.divisionBtn.isEnabled = false;
-//        binding.multiplicationBtn.isEnabled = false;
-//        binding.plusBtn.isEnabled = false;
-//        binding.minusBtn.isEnabled = false;
-//        binding.modulusBtn.isEnabled = false;
-//        binding.equalsBtn.isEnabled = false;
 
         return binding.root
     }
@@ -170,24 +165,29 @@ class KeyboardFragment : Fragment() {
                     secondOperand = Double.NaN
                     activityCallback.onResult(result)
                     sqrRoot = false
+                    currentOperator = Symbols.INITIAL
             }
         }
 
         binding.clearBtn.setOnClickListener {
             firstOperand = Double.NaN
+            secondOperand = Double.NaN
             sqrRoot = false
             result = Double.NaN
             inputState.clear()
             activityCallback.onClear()
+            currentOperator = Symbols.INITIAL
         }
 
         binding.ceBtn.setOnClickListener {
-            // TODO: implement this
+            if(checkInput()) {
+                if (currentOperator == Symbols.INITIAL || inputState.isNotEmpty()) {
+                    inputState.deleteAt(inputState.length - 1)
+                }
+                activityCallback.onClearLast()
+            }
 
         }
-
-        // TODO: Implement rotating screen functionality
-
 
     }
 
@@ -219,7 +219,7 @@ class KeyboardFragment : Fragment() {
                 Symbols.MULTIPLICATION -> result = firstOperand * secondOperand
                 Symbols.DIVISION -> result = firstOperand / secondOperand
                 Symbols.MODULUS -> result = firstOperand % secondOperand
-                Symbols.SQUAREROOT -> Log.w("project2", "SQUARE ROOT operation") // Might not work! Old code result = firstOperand * sqrt(secondOperand)
+                Symbols.SQUAREROOT -> Log.w("project2", "SQUARE ROOT operation") // Might not work! Old code:  result = firstOperand * sqrt(secondOperand)
                 Symbols.INITIAL -> Log.w("project2", "Initial state!")
             }
             return true
@@ -257,7 +257,7 @@ class KeyboardFragment : Fragment() {
                         if(inputState.isEmpty()) Log.w("project2", "Enter first operand")
                         else {
                         firstOperand = if (sqrRoot) {
-                            sqrRoot = false
+//                            sqrRoot = false
                             sqrt(inputState.toString().toDouble())
                         } else {
                             inputState.toString().toDouble()

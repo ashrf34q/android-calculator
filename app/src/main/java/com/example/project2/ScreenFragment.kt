@@ -35,11 +35,13 @@ class ScreenFragment : Fragment() {
         binding.screenView.append(operand)
     }
 
-    fun setOperator(operator: String) {
-        binding.screenView.append(" $operator ")
-    }
-
     fun setResult(result: String) {
         binding.screenView.text = result
+    }
+
+    fun clearLast() {
+        var text = binding.screenView.text
+        text = text.substring(0, text.length - 1)
+        binding.screenView.text = text
     }
 }
