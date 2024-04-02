@@ -1,6 +1,8 @@
 package com.example.project2
 
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import java.text.DecimalFormat
@@ -20,6 +22,25 @@ class MainActivity : AppCompatActivity(), KeyboardFragment.DataListener {
         ft.commit()
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+
+        val fm = supportFragmentManager
+        val ft = fm.beginTransaction()
+
+        super.onConfigurationChanged(newConfig)
+
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Landscape
+            Log.w("Project2", "Landscape mode")
+            setContentView(R.layout.activity_main_landscape)
+        }
+        else{
+            setContentView(R.layout.activity_main)
+        }
+        ft.replace(R.id.screenLayout, ScreenFragment())
+        ft.replace(R.id.keyboard, KeyboardFragment())
+        ft.commit()
+    }
 
     override fun onOperandChange(operand: String) {
         val screenFragment = supportFragmentManager.findFragmentById(R.id.screenLayout) as ScreenFragment

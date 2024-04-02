@@ -1,14 +1,17 @@
 package com.example.project2
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.project2.databinding.FragmentKeyboardBinding
+import com.example.project2.databinding.FragmentKeyboardLandscapeBinding
 import java.text.DecimalFormat
 import kotlin.ClassCastException
 import kotlin.math.sqrt
@@ -54,6 +57,15 @@ class KeyboardFragment : Fragment() {
         binding = FragmentKeyboardBinding.inflate(inflater, container, false)
 
         return binding.root
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Landscape
+            Log.w("Project2", "Landscape mode in keyboard fragment")
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
